@@ -1,6 +1,5 @@
 #include <Arduino.h>
-#include <SPI.h>
-#include "canfd2.h"
+#include <canfd2.h>
 
 #define SPI_RX 16
 #define SPI_CS 17
@@ -28,7 +27,7 @@ static void can2040_cb(struct can2040 *cd, uint32_t notify, struct can2040_msg *
 }
 
 void setup(){
-  Serial.begin(115200); //Begin serial communication with PC'
+  Serial.begin(115200);
   Serial.println("Setting up CANFD 2 CLICK");
   canfd2.begin(500000, can2040_cb);
 }
@@ -50,5 +49,5 @@ void loop() {
 
   uint8_t res = canfd2.send_frame(&msg);
 
-  delay(250);
+  delay(100);
 }

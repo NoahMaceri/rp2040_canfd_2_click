@@ -1,12 +1,12 @@
 #include <Arduino.h>
 #include <canfd2.h>
 
-#define SPI_RX 16
-#define SPI_CS 17
-#define SPI_SCK 18
-#define SPI_TX 19
-#define UART_TX 0
-#define UART_RX 1
+#define SPI_RX  0
+#define SPI_CS  1
+#define SPI_SCK 2
+#define SPI_TX  3
+#define UART_TX 4
+#define UART_RX 5
 
 CANFD2 canfd2(UART_TX, UART_RX, SPI_TX, SPI_RX, SPI_CS, SPI_SCK);
 
@@ -34,7 +34,6 @@ void setup(){
 
 
 void loop() {
-  // build can frame (from scratch)
   struct can2040_msg msg;
   msg.id = 0x123;
   msg.dlc = 8;
@@ -48,6 +47,5 @@ void loop() {
   msg.data[7] = 0x08;
 
   uint8_t res = canfd2.send_frame(&msg);
-
   delay(100);
 }

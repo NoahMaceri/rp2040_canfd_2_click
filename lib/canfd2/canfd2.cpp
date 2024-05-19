@@ -10,15 +10,15 @@ CANFD2::CANFD2(uint8_t tx, uint8_t rx, uint8_t spi_tx, uint8_t spi_rx, uint8_t s
 }
 
 CANFD2::~CANFD2() {
-    Serial1.end();
+    Serial2.end();
     SPI.end();
 }
 
 
 void CANFD2::begin(uint32_t baudrate, can2040_rx_cb callback) {
-    Serial1.setTX(tle9255w_tx);
-    Serial1.setRX(tle9255w_rx);
-    Serial1.begin(9600);
+    Serial2.setTX(tle9255w_tx);
+    Serial2.setRX(tle9255w_rx);
+    Serial2.begin(9600);
 
     SPI.setTX(spi_tx); 
     SPI.setRX(spi_rx);
@@ -26,8 +26,8 @@ void CANFD2::begin(uint32_t baudrate, can2040_rx_cb callback) {
     SPI.setCS(spi_cs);
     pinMode(spi_cs, OUTPUT);
     digitalWrite(spi_cs, HIGH);
-    // We have to control the CS manually as the TKE9255W needs CS driven low for configuration
-    // Using hwCS control, the CS is driven high between the write and read
+    // We have to control the CS manually as the TKE9255W needs CS driven low for write then read
+    // Using hwCS control, the CS is driven high between the write then read
     SPI.begin(false);
 
     uint32_t this_baudrate = baudrate;
